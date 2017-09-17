@@ -21,7 +21,7 @@ defmodule KV do
     {target_ip, k} = parse_args(args)
     raw_data = generate_raw(10)
     IO.puts target_ip; IO.puts k
-    mine_coin({raw_data, k})
+    mine_coin(raw_data, k)
   end
 
   @doc """
@@ -63,16 +63,14 @@ defmodule KV do
   @doc """
   According to the raw string and k value, mine the bitcoin.
   """
-  def mine_coin({raw_data, k}) do
+  def mine_coin(raw_data, k) do
     hashed = :crypto.hash(:sha256, String.downcase(raw_data)) |> Base.encode16
-    # IO.puts String.length(hashed)
     top_k = String.slice(hashed, 0, k)
-    # IO.puts top_k
-    # target = String.duplicate("0", k)
-    # IO.puts target == top_k
-    if Enum.all?(String.to_charlist(top_k), fn(x) -> x == ?0 end) do
-      output = Enum.join([raw_data, hashed], "\t")
-      IO.puts output
-    end
+    output = 
+      case Enum.all?(String.to_charlist(top_k), fn(x) -> x == ?0 end) do
+        true->
+          Enum.join([raw_data, hashed], "\t")
+      end
+    output
   end
 end
