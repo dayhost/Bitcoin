@@ -7,14 +7,9 @@ defmodule Bitcoin.Worker do
     end
 
     defp client_logic(socket) do
-        binary = get_str(socket)
-        IO.puts "get data form master #{binary}"
-        hash_value = hash_str(binary)
-        flag = check_result(hash_value)
-        Process.sleep(1000)
-        send_result(hash_value, socket)
-        IO.puts "already send response"
-        
+        str = get_str(socket)
+        hash_value = hash_str(str)
+        send_result(hash_value, socket)     
         client_logic(socket)
     end
 
@@ -23,16 +18,14 @@ defmodule Bitcoin.Worker do
         hash_value
     end
 
-    defp check_result(str) do
-        true
-    end
-    
     defp get_str(socket) do
         {:ok, line} = :gen_tcp.recv(socket, 0)
+        #IO.puts "Worker: get #{line} from #{Kernel.inspect(socket)}"
         line
     end
 
     defp send_result(data, socket) do
-        :gen_tcp.send(socket, data)
+        response = :gen_tcp.send(socket, data)
+        #IO.puts "Worker: already send #{data} to #{Kernel.inspect(socket)} and response is #{response}"
     end
 end
