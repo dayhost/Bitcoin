@@ -17,7 +17,7 @@ Ratio | 0.980 | 1.63 | 2.53 | 3.54 | 3.53 | 3.47 | 3.46 | 3.48 | 3.52 | 3.50 | 3
 - The CUP information is: 1.6 GHz Intel Core i5 with 2 core 4 thread
 - The Memory information is: 4 GB 1600 MHz DDR3
 - The Ratio means the ratio of CPU time to REAL TIME
-- From the results, we can see work in the above hardware environment, when size of work unit is 4 we can obtain the best performance. Further increasing the work unit will not increase the performance any more.
+- From the results, we can find in the above hardware environment, when size of work unit is 4 we can obtain the best performance. Further increasing the work unit will not increase the performance any more.
 
 ##### problem 2
 - The result of running ./project 4 is showing below(run for 3 minutes) 
