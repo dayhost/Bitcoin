@@ -3,7 +3,7 @@ defmodule Bitcoin.Worker do
         opts = [:binary, active: false]
         {:ok, socket} = :gen_tcp.connect(address, port, opts)
         IO.puts "connect to the server"
-        client_logic(socket, 3)
+        client_logic(socket, k)
     end
 
     defp client_logic(socket, k) do
@@ -36,14 +36,18 @@ defmodule Bitcoin.Worker do
         alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         numbers = "0123456789"
         lists = String.downcase(alphabets) <> numbers |> String.split("", trim: true)
+        [real_prefix, assigned_int] = String.split(prefix, ";")
+        index = rem(String.to_integer(assigned_int), length(lists))
+        assigned_work = Enum.at(lists, index)
+        rest_length = length - String.length(assigned_work)
         range = 
-            if length > 1 do
-                (1..length)
+            if rest_length > 1 do
+                (1..rest_length)
             else 
                 [1]
             end
         surfix = range |> Enum.reduce([], fn(_, acc) -> [Enum.random(lists) | acc] end) |> List.to_string
-        prefix <> surfix
+        real_prefix <> ";" <> assigned_work <> surfix
     end
 
     defp mine_coin(raw_data, k) do

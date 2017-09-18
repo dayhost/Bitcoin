@@ -5,18 +5,21 @@ defmodule Bitcoin.Master do
         opts = [:binary, active: false, reuseaddr: true]
         {:ok, socket} = :gen_tcp.listen(port, opts)
         Logger.info "Start to listen to port #{port}"
-        accept_connection(socket)
+        init_int = 0
+        accept_connection(socket, init_int)
     end
 
-    defp accept_connection(socket) do
+    defp accept_connection(socket, assigned_int) do     
         {:ok, client} = :gen_tcp.accept(socket)
-        spawn(fn -> serve(client) end)
-        accept_connection(socket)
+        spawn_link(fn -> serve(client, assigned_int) end)
+        assigned_int = assigned_int + 1
+        accept_connection(socket, assigned_int)
     end
 
-    defp serve(socket) do
+    defp serve(socket, assigned_int) do
         prefix = "yanjunshuyu;"
-        send_data(socket, prefix)
+        assigned_prefix = prefix <> Integer.to_string(assigned_int)
+        send_data(socket, assigned_prefix)
         get_coin_from_worker(socket)
     end
 
