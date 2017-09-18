@@ -80,7 +80,7 @@ unit 2 | 0.975 | 1.805 | 2.53 | 2.99 | 3.49 | 3.63 | 4.06 | 4.21 | 4.45 | 4.46 |
 
 ##### problem 4
 - The coin with the most 0s we managed to find is as follow, which has nine 0s:
-- 
+
                 yanjunshuyu;apaeiklcsh  0000000001A9FF7FEB0B83D0EB1826FFF5FC5714FB4DE97E6B9BC7AC55F58D8E
 ##### problem 5
 - We run 1 worker in one machine and it could connect at most 12 machines together.
