@@ -31,7 +31,7 @@ defmodule Bitcoin.Master do
     defp get_coin_from_worker(socket) do
         #IO.puts "Master: waiting for response from #{Kernel.inspect(socket)}"
         output =
-            case :gen_tcp.recv(socket, 0) do
+            case :gen_tcp.recv(socket, 87) do
                 {:ok, response} -> 
                     response
                     #IO.puts "Master: get #{response} from #{Kernel.inspect(socket)}"
