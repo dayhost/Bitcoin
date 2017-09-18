@@ -8,17 +8,18 @@ defmodule Bitcoin.Worker do
 
     defp client_logic(socket, k) do
         prefix = get_str(socket)
-        mining_logic(socket, k, prefix) 
+        mining_logic(socket, k, prefix, "") 
     end
 
-    defp mining_logic(socket, k, prefix) do
+    defp mining_logic(socket, k, prefix, init_str) do
         # set length equal to 10
-        random_str = get_random_str(prefix, 10)
-        result_str = mine_coin(random_str, k)
+        length = 10
+        {mining_str, surfix} = get_next_mining_str(prefix, length, init_str)
+        result_str = mine_coin(mining_str, k)
         if result_str != -1 do
             send_result(socket, result_str)
         end
-        mining_logic(socket, k, prefix)
+        mining_logic(socket, k, prefix, surfix)
     end
 
     defp get_str(socket) do
@@ -32,22 +33,18 @@ defmodule Bitcoin.Worker do
         #IO.puts "Worker: already send #{data} to #{Kernel.inspect(socket)} and response is #{response}"
     end
 
-    defp get_random_str(prefix, length) do
-        alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        numbers = "0123456789"
-        lists = String.downcase(alphabets) <> numbers |> String.split("", trim: true)
-        [real_prefix, assigned_int] = String.split(prefix, ";")
-        index = rem(String.to_integer(assigned_int), length(lists))
-        assigned_work = Enum.at(lists, index)
-        rest_length = length - String.length(assigned_work)
-        range = 
-            if rest_length > 1 do
-                (1..rest_length)
-            else 
-                [1]
+    defp get_next_mining_str(prefix, length, init_string) do
+        [real_prefix, assigned_seed] = String.split(prefix, ";")
+        work_unit_length = length - length(String.to_charlist(assigned_seed))
+        surfix = 
+            case init_string == "" do
+                true -> 
+                    List.to_string(Bitcoin.init_k_length_list(work_unit_length, []))
+                false ->
+                    Bitcoin.get_next_symbol(init_string)
             end
-        surfix = range |> Enum.reduce([], fn(_, acc) -> [Enum.random(lists) | acc] end) |> List.to_string
-        real_prefix <> ";" <> assigned_work <> surfix
+        output = real_prefix <> ";" <> assigned_seed <> surfix
+        {output, surfix}
     end
 
     defp mine_coin(raw_data, k) do

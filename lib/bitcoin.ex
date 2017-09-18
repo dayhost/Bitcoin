@@ -12,7 +12,7 @@ defmodule Bitcoin do
         spawn_link(fn -> start_server(port) end)
         Process.sleep(1000)
         Enum.map(
-          1..1,
+          1..10,
           fn x -> spawn_link(fn -> start_client(address, port, k) end) end
         )
       {:remote, address} ->
@@ -75,7 +75,8 @@ defmodule Bitcoin do
   end
 
   def get_next_symbol(str) do
-    next_symbol(String.to_charlist(str),-1)
+    next_symbol(String.to_charlist(str), -1)
+    |> List.to_string
   end
 
   defp get_k_length_z_list(k, list) do
@@ -106,18 +107,6 @@ defmodule Bitcoin do
               tmp_result = List.insert_at(rest, index, 97)
               next_symbol(tmp_result, index-1)
           end
-      end
-    output
-  end
-
-  defp next_symbol(char_list, index) when index == -length(char_list) do
-    {char_at, rest} = List.pop_at(char_list, index)
-    output = 
-      case (char_at+1<123) do
-        true ->
-          List.insert_at(rest, index, char_at+1)
-        false->
-          List.insert_at(rest, index, 122)
       end
     output
   end
