@@ -62,18 +62,30 @@ defmodule Bitcoin do
     end
   end 
   
+  def init_k_length_list(k, list) do
+    output = 
+      case (length(list)==k) do
+        true->
+          list
+        false->
+          tmp_list = List.insert_at(list, -1, 'a')
+          init_k_length_list(k, tmp_list)
+      end
+    output
+  end
+
   def get_next_symbol(str) do
     next_symbol(String.to_charlist(str),-1)
   end
 
-  defp next_symbol(char_list, index) when index == -length(char_list) do
-    {char_at, rest} = List.pop_at(char_list, index)
+  defp get_k_length_z_list(k, list) do
     output = 
-      case (char_at+1<=122) do
-        true ->
-          List.insert_at(rest, index, char_at+1)
+      case (length(list)==k) do
+        true->
+          list
         false->
-          List.insert_at(rest, index, 122)
+          tmp_list = List.insert_at(list, -1, 'z')
+          get_k_length_z_list(k, tmp_list)
       end
     output
   end
@@ -81,12 +93,31 @@ defmodule Bitcoin do
   defp next_symbol(char_list, index) do
     {char_at, rest} = List.pop_at(char_list, index)
     output = 
-      case (char_at+1<=122) do
+      # char should within 'z'
+      case (char_at+1<123) do
         true ->
           List.insert_at(rest, index, char_at+1)
         false->
-          tmp_result = List.insert_at(rest, index, 97)
-          next_symbol(tmp_result, index-1)
+          z_str = get_k_length_z_list(length(char_list), [])
+          case List.to_string(z_str) == List.to_string(char_list) do
+            true ->
+              z_str
+            false->
+              tmp_result = List.insert_at(rest, index, 97)
+              next_symbol(tmp_result, index-1)
+          end
+      end
+    output
+  end
+
+  defp next_symbol(char_list, index) when index == -length(char_list) do
+    {char_at, rest} = List.pop_at(char_list, index)
+    output = 
+      case (char_at+1<123) do
+        true ->
+          List.insert_at(rest, index, char_at+1)
+        false->
+          List.insert_at(rest, index, 122)
       end
     output
   end
