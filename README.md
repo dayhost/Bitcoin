@@ -12,8 +12,10 @@
 
 Unit No. | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
 ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----
-  | 0.980 | 1.63 | 2.53 | 3.54 | 3.53 | 3.47 | 3.46 | 3.48 | 3.52 | 3.50 | 3.49
+ratio of CPU time to real time | 0.980 | 1.63 | 2.53 | 3.54 | 3.53 | 3.47 | 3.46 | 3.48 | 3.52 | 3.50 | 3.49
 
+- The CUP information is: 1.6 GHz Intel Core i5 with 2 core 4 thread
+- The Memory information is: 4 GB 1600 MHz DDR3
 
 ##### problem 2
 - The result of running ./project 4 is showing below(run for 3 minutes) 
