@@ -16,8 +16,8 @@ unit 1 | 0.980 | 1.63 | 2.08 | 2.08 | 2.06 | 2.10 | 2.21 | 2.20 | 2.40 | 2.52 | 
 unit 2 | 0.975 | 1.805 | 2.53 | 2.99 | 3.49 | 3.63 | 4.06 | 4.21 | 4.45 | 4.46 | 4.30
 
 ##### problem 2
-- The result of running ./project 4 is showing below(run for 3 minutes)
-- 
+- The result of running ./project 4 is showing below(run for 3 minutes) 
+
                 yanjunshuyu;eaaaaabren	00005989C4967825D4B54ECB48CC5B1F39E2E6D62A8BCAD74E8E6FA5A887AECC
                 yanjunshuyu;baaaaabzve	00007F2B6EEE52E693D01300E8234DC34FFA86161BD3963A336E99F92272A610
                 yanjunshuyu;daaaaacdwr	0000B0B7A81491AEBE98A18BA6BDB69B2B2FE36122C91300BA55EBDB6DF4C6B7
@@ -79,7 +79,6 @@ unit 2 | 0.975 | 1.805 | 2.53 | 2.99 | 3.49 | 3.63 | 4.06 | 4.21 | 4.45 | 4.46 |
 - We can see that the ratio is above 3. 
 
 ##### problem 4
-
 - The coin with the most 0s we managed to find is as follow, which has nine 0s:
 - 
                 yanjunshuyu;apaeiklcsh  0000000001A9FF7FEB0B83D0EB1826FFF5FC5714FB4DE97E6B9BC7AC55F58D8E
