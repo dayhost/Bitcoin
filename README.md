@@ -4,8 +4,10 @@
 - Shuyu Yin (UFID 70858564)
 ### Questions
 ##### problem 1
-- In our implementation, work unit refers how large of the sub-problems that is assigned to a worker througth a single request from the server side. To efficiently make use of the computational capability of the worker, the work assigner in the server will send an assignment "seed" to the worker, when the worker first conncets to the server. Througth this way, we ensure 
-- The length of our surfix is 10 and it contains 2 parts: seed and other string. Seed is the first char of the surfix. 
+- In our implementation, work unit refers how large of the sub-problems that is assigned to a worker througth a single request from the server side. To efficiently make use of the computational capability of the worker, the work assigner in the server will send an assignment "seed" to the worker, when the worker first conncets to the server. Througth this way, we ensure that after sending the work assignment one time, the server does not need to send extra information to the client, which largely reduces the time consume on the TCP communication. 
+- For the specific work assigment "seed", we implement the following policy to generate it. First, the fixed prefix of the seed is our last names, which is required in the project description. Then based on the work unit setting, which you can flexibly adjust in the program, the server will generate corresponding meta prefix, which differs for the different workers. And the policy ensures that all the meta prefixes will cover intact search scope for the bitcoin. The server will concatnate the fixed prefix and work assignment prefix as a string to send to the assigned worker. After each worker receives the unique seed, it will start to generate the rest part of the final string to be hashed. For example, if the work unit is set as 100 and the string only contains the number, the meta prefix will be divided into 100 pieces, from (00, 01, ..., 98, 99). So if the worker receives the message contains the meta prefix 00, it will be responsible for hashing all the strings starts as fixed prefix + "00", including "001", "002", "0012".  
+And here you can also set the total length of the final string. Suppose the total length is given, worker will start from the initial point in the scope and iterate all the possible values to construct the intact final string. Once a string is finalized, it will be hashed by the SHA-256.  
+
 - The result is show below
 
 Worker No. | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
