@@ -12,7 +12,7 @@ defmodule Bitcoin do
         spawn_link(fn -> start_server(port) end)
         Process.sleep(1000)
         Enum.map(
-          1..10,
+          1..8,
           fn x -> spawn_link(fn -> start_client(address, port, k) end) end
         )
       {:remote, address} ->
