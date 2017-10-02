@@ -9,16 +9,19 @@ defmodule Bitcoin do
   defp control_logic(address, port, k) do
     case check_ip_address(address) do
       {:local, address} ->
-        spawn_link(fn -> start_server(port) end)
+        Bitcoin.Server.start(port)
+        # spawn_link(fn -> start_server(port) end)
         Process.sleep(1000)
         Enum.map(
           1..8,
-          fn x -> spawn_link(fn -> start_client(address, port, k) end) end
+          fn x -> Bitcoin.Client.start(address, port, k) end
+          # fn x -> spawn_link(fn -> start_client(address, port, k) end) end
         )
       {:remote, address} ->
         Enum.map(
           1..3,
-          fn x -> spawn_link(fn -> start_client(address, port, k) end) end
+          fn x -> Bitcoin.Client.start(address, port, k) end
+          # fn x -> spawn_link(fn -> start_client(address, port, k) end) end
         )
     end
   end
